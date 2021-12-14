@@ -1,0 +1,68 @@
+.task-page-container {
+	background-color: #fff;
+	position: fixed;
+	top: 77px;
+	left: 14px;
+	width: 98.5%;
+	height: 83%;
+	border-radius: 5px;
+	padding: 22px 28px;
+}
+
+.task-page-title {
+	font-size: 24px;
+	font-weight: 400;
+	margin-bottom: 40px;
+}
+
+.task-page-exit span:first-child {
+	position: absolute;
+	background-color: #000;
+	height: 1px;
+	width: 32px;
+	top: 28px;
+	right: 22px;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+
+.task-page-exit span:nth-child(2) {
+	position: absolute;
+	background-color: #000;
+	height: 1px;
+	width: 32px;
+	top: 28px;
+	right: 22px;
+	transform: rotate(135deg);
+	cursor: pointer;
+}
+
+.task-page-tasks {
+	margin-bottom: 35px;
+}
+
+.task-page-task {
+	margin-bottom: 10px;
+}
+
+.task-page-date {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #888888;
+	font-size: 14px;
+}
+
+.task-page-info {
+	margin-bottom: 10px;
+	font-style: italic;
+	color: #888888;
+}
+
+.task-page-button {
+	background-color: #0079bf;
+	color: #fff;
+	cursor: pointer;
+	padding: 5px 20px;
+	border-radius: 5px;
+	margin-right: 10px;
+}
