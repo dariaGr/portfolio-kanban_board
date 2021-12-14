@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import './Finished.css';
-import Card from '../Card/Card';
 import { Link } from 'react-router-dom';
 
 const Finished = ({

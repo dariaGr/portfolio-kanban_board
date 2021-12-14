@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import './InProgress.css';
-import Card from '../Card/Card';
 import { Link } from 'react-router-dom';
 
 const InProgress = ({

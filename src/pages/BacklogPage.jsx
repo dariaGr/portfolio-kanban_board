@@ -2,27 +2,21 @@ import './TaskPage.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const BacklogPage = ({
-	backlogTasks,
-	backlogInfo,
-	backlogDate,
-	backlogEdit,
-}) => {
-	function cmp(tasks, info, date) {
+const BacklogPage = ({ backlogTasks, backlogDate }) => {
+	function cmp(tasks, date) {
 		let newArray = [];
 
 		for (let i = 0; i < tasks.length; i++) {
-			if (tasks.indexOf([i]) === info.indexOf([i])) {
-				newArray.push([tasks[i], info[i], date[i]]);
+			if (tasks.indexOf([i]) === date.indexOf([i])) {
+				newArray.push([tasks[i], date[i]]);
 				console.log('newarray:', newArray);
 			}
 		}
 
-		return newArray.map((item, index) => (
+		return newArray.map((item) => (
 			<div className="task-page-tasks" key={Math.random()}>
 				<div className="task-page-task">{item[0]}</div>
-				<div className="task-page-info">{item[1]}</div>
-				<div className="task-page-date">Created: {item[2]}</div>
+				<div className="task-page-date">{item[1]}</div>
 			</div>
 		));
 	}
@@ -32,9 +26,7 @@ const BacklogPage = ({
 			<h1 className="task-page-title">Backlog Tasks</h1>
 
 			<div className="task-page-content">
-				<div className="task-page-tasks">
-					{cmp(backlogTasks, backlogInfo, backlogDate, backlogEdit)}
-				</div>
+				<div className="task-page-tasks">{cmp(backlogTasks, backlogDate)}</div>
 			</div>
 			<div className="task-page-exit">
 				<Link to="/">
@@ -49,7 +41,6 @@ const BacklogPage = ({
 const mapStateToProps = (state) => {
 	return {
 		backlogTasks: state.tasks.backlogTasks,
-		backlogInfo: state.tasks.backlogInfo,
 		backlogDate: state.tasks.backlogDate,
 	};
 };

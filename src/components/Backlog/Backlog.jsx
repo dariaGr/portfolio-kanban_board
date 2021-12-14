@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import './Backlog.css';
 import { Link } from 'react-router-dom';
+import '../Card/Card.css';
 
 const Backlog = ({
 	deletedTask,

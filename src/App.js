@@ -5,11 +5,15 @@ import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
 import { createBacklogTask } from './redux/actions';
+import { createBacklogDate } from './redux/actions';
 import { createReadyTask } from './redux/actions';
+import { createReadyDate } from './redux/actions';
 import { removeBacklogTask } from './redux/actions';
 import { createInProgressTask } from './redux/actions';
+import { createInProgressDate } from './redux/actions';
 import { removeReadyTask } from './redux/actions';
 import { createFinishedTask } from './redux/actions';
+import { createFinishedDate } from './redux/actions';
 import { removeInProgressTask } from './redux/actions';
 // import AppRouter from './routes';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
@@ -88,8 +92,10 @@ class App extends React.Component {
 		}
 
 		const newTask = backlogInputValue;
+		const newDate = new Date().toLocaleString();
 
 		this.props.createBacklogTask(newTask);
+		this.props.createBacklogDate(newDate);
 
 		this.setState({
 			backlogInputValue: '',
@@ -100,8 +106,10 @@ class App extends React.Component {
 	submitReadyOnClick(value) {
 		const ReadyTasks = this.props.backlogTasks;
 		const newReadyTask = value;
+		const newReadyDate = new Date().toLocaleString();
 		const newReadyTaskIndex = ReadyTasks.indexOf(value);
 		this.props.createReadyTask(newReadyTask);
+		this.props.createReadyDate(newReadyDate);
 		this.props.removeBacklogTask(newReadyTaskIndex);
 
 		// this.setState({ deletedTask: true });
@@ -110,8 +118,10 @@ class App extends React.Component {
 	submitInProgressOnClick(value) {
 		const InProgressTasks = this.props.readyTasks;
 		const newInProgressTask = value;
+		const newInProgressDate = new Date().toLocaleString();
 		const newInProgressTaskIndex = InProgressTasks.indexOf(value);
 		this.props.createInProgressTask(newInProgressTask);
+		this.props.createInProgressDate(newInProgressDate);
 		this.props.removeReadyTask(newInProgressTaskIndex);
 
 		// this.setState({ deletedTask: true });
@@ -120,8 +130,10 @@ class App extends React.Component {
 	submitFinishedOnClick(value) {
 		const FinishedTasks = this.props.inProgressTasks;
 		const newFinishedTask = value;
+		const newFinishedDate = new Date().toLocaleString();
 		const newFinishedTaskIndex = FinishedTasks.indexOf(value);
 		this.props.createFinishedTask(newFinishedTask);
+		this.props.createFinishedDate(newFinishedDate);
 		this.props.removeInProgressTask(newFinishedTaskIndex);
 
 		// this.setState({ deletedTask: true });
@@ -201,11 +213,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	createBacklogTask,
+	createBacklogDate,
 	createReadyTask,
+	createReadyDate,
 	removeBacklogTask,
 	createInProgressTask,
+	createInProgressDate,
 	removeReadyTask,
 	createFinishedTask,
+	createFinishedDate,
 	removeInProgressTask,
 };
 
