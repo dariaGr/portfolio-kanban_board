@@ -15,7 +15,6 @@ import { removeReadyTask } from './redux/actions';
 import { createFinishedTask } from './redux/actions';
 import { createFinishedDate } from './redux/actions';
 import { removeInProgressTask } from './redux/actions';
-// import AppRouter from './routes';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import BacklogPage from './pages/BacklogPage';
 import ReadyPage from './pages/ReadyPage';
@@ -33,6 +32,7 @@ class App extends React.Component {
 			// deletedTask: false,
 			inProgressClicked: false,
 			finishedClicked: false,
+			status: false,
 		};
 
 		this.handleClick = this.handleClick.bind(this);
@@ -43,7 +43,6 @@ class App extends React.Component {
 		this.handleInProgressClick = this.handleInProgressClick.bind(this);
 		this.handleInProgressEmptyClick = this.handleInProgressEmptyClick.bind(this);
 		this.submitInProgressOnClick = this.submitInProgressOnClick.bind(this);
-		this.submitReadyOnClick = this.submitReadyOnClick.bind(this);
 		this.handleFinishedClick = this.handleFinishedClick.bind(this);
 		this.handleFinishedEmptyClick = this.handleFinishedEmptyClick.bind(this);
 		this.submitFinishedOnClick = this.submitFinishedOnClick.bind(this);
@@ -111,8 +110,6 @@ class App extends React.Component {
 		this.props.createReadyTask(newReadyTask);
 		this.props.createReadyDate(newReadyDate);
 		this.props.removeBacklogTask(newReadyTaskIndex);
-
-		// this.setState({ deletedTask: true });
 	}
 
 	submitInProgressOnClick(value) {
@@ -123,8 +120,6 @@ class App extends React.Component {
 		this.props.createInProgressTask(newInProgressTask);
 		this.props.createInProgressDate(newInProgressDate);
 		this.props.removeReadyTask(newInProgressTaskIndex);
-
-		// this.setState({ deletedTask: true });
 	}
 
 	submitFinishedOnClick(value) {
@@ -135,14 +130,7 @@ class App extends React.Component {
 		this.props.createFinishedTask(newFinishedTask);
 		this.props.createFinishedDate(newFinishedDate);
 		this.props.removeInProgressTask(newFinishedTaskIndex);
-
-		// this.setState({ deletedTask: true });
 	}
-
-	// submitCardOnClick(value) {
-	// 	this.submitReadyOnClick(value);
-	// 	this.submitInProgressOnClick(value);
-	// }
 
 	render() {
 		const {

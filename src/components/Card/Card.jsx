@@ -13,6 +13,3 @@ const Card = ({ task, customClass, submitInProgressOnClick }) => {
 };
 
 export default Card;
-
-// решить проблему с deletedTask
-// ${deletedTask ? 'card-removed' : ''}

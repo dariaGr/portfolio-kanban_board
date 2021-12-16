@@ -30,8 +30,3 @@
 .card-passed:hover {
 	background-color: #dedede;
 }
-
-.card-removed {
-	/* display: none; */
-	color: red;
-}

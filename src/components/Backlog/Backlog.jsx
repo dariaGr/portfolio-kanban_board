@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import '../Card/Card.css';
 
 const Backlog = ({
-	deletedTask,
 	backlogTasks,
 	handleClick,
 	backlogClicked,
