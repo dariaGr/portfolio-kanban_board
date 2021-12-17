@@ -3,10 +3,10 @@ import { CREATE_BACKLOG_DATE } from './types';
 import { CREATE_READY_TASK } from './types';
 import { CREATE_READY_DATE } from './types';
 import { REMOVE_BACKLOG_TASK } from './types';
-import {CREATE_INPROGRESS_TASK} from './types';
+import { CREATE_INPROGRESS_TASK } from './types';
 import { CREATE_INPROGRESS_DATE } from './types';
 import { REMOVE_READY_TASK } from './types';
-import {CREATE_FINISHED_TASK} from './types';
+import { CREATE_FINISHED_TASK } from './types';
 import { CREATE_FINISHED_DATE } from './types';
 import { REMOVE_INPROGRESS_TASK } from './types';
 import { initialState } from './store';
@@ -24,10 +24,7 @@ export const tasksReducer = (state = initialState, action) => {
 		case REMOVE_BACKLOG_TASK:
 			return {
 				...state,
-				backlogTasks: [
-					state.backlogTasks.slice(0, action.payload),
-					...state.backlogTasks.slice(action.payload + 1),
-				],
+				backlogTasks: state.backlogTasks.filter((task, index) => index !== action.payload),
 			};
 		case CREATE_INPROGRESS_TASK:
 			return { ...state, inProgressTasks: state.inProgressTasks.concat([action.payload]) };
@@ -36,10 +33,7 @@ export const tasksReducer = (state = initialState, action) => {
 		case REMOVE_READY_TASK:
 			return {
 				...state,
-				readyTasks: [
-					state.readyTasks.slice(0, action.payload),
-					...state.readyTasks.slice(action.payload + 1),
-				],
+				readyTasks: state.readyTasks.filter((task, index) => index !== action.payload),
 			};
 		case CREATE_FINISHED_TASK:
 			return { ...state, finishedTasks: state.finishedTasks.concat([action.payload]) };
@@ -48,10 +42,7 @@ export const tasksReducer = (state = initialState, action) => {
 		case REMOVE_INPROGRESS_TASK:
 			return {
 				...state,
-				inProgressTasks: [
-					state.inProgressTasks.slice(0, action.payload),
-					...state.inProgressTasks.slice(action.payload + 1),
-				],
+				inProgressTasks: state.inProgressTasks.filter((task, index) => index !== action.payload),
 			};
 
 		default:
