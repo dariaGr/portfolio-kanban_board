@@ -1,40 +1,15 @@
 .task-page-container {
 	background-color: #fff;
-	position: fixed;
-	top: 77px;
-	left: 14px;
-	width: 98.5%;
-	height: 83%;
+	margin: 15px 15px 73px;
 	border-radius: 5px;
 	padding: 22px 28px;
+	position: relative;
 }
 
 .task-page-title {
 	font-size: 24px;
 	font-weight: 400;
 	margin-bottom: 40px;
-}
-
-.task-page-exit span:first-child {
-	position: absolute;
-	background-color: #000;
-	height: 1px;
-	width: 32px;
-	top: 28px;
-	right: 22px;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-
-.task-page-exit span:nth-child(2) {
-	position: absolute;
-	background-color: #000;
-	height: 1px;
-	width: 32px;
-	top: 28px;
-	right: 22px;
-	transform: rotate(135deg);
-	cursor: pointer;
 }
 
 .task-page-tasks {
@@ -65,4 +40,10 @@
 	padding: 5px 20px;
 	border-radius: 5px;
 	margin-right: 10px;
+}
+
+@media (max-width: 830px) {
+	.task-page-container {
+		margin: 15px 15px 100px;
+	}
 }

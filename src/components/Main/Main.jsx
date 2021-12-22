@@ -1,67 +1,87 @@
 import './Main.css';
-import Backlog from '../Backlog/Backlog';
-import Ready from '../Ready/Ready';
-import InProgress from '../InProgress/InProgress';
-import Finished from '../Finished/Finished';
+import { useStore } from 'react-redux';
+import { BacklogCard } from '../BacklogCard';
+import { Card } from '../Card';
 
-const Main = ({
-	deletedTask,
-	handleClick,
-	handleReadyClick,
+export const Main = ({
+	backlogValue,
 	backlogClicked,
+	readyClicked,
+	inProgressClicked,
+	finishedClicked,
+	handleClick,
+	handleEmptyClick,
+	submitBacklogOnClick,
+	backlogOnChange,
 	submitOnClick,
 	submitReadyOnClick,
-	backlogOnChange,
-	backlogValue,
-	readyClicked,
-	handleReadyEmptyClick,
-	handleInProgressEmptyClick,
-	handleInProgressClick,
-	inProgressClicked,
 	submitInProgressOnClick,
-	handleFinishedEmptyClick,
-	handleFinishedClick,
-	finishedClicked,
 	submitFinishedOnClick,
 }) => {
+	const store = useStore();
+	const backlogTasks = store.getState().tasks.backlogTasks;
+	const readyTasks = store.getState().tasks.readyTasks;
+	const inProgressTasks = store.getState().tasks.inProgressTasks;
+	const finishedTasks = store.getState().tasks.finishedTasks;
+
 	return (
-		<div className="main">
-			<div className="task-container">
-				<Backlog
-					submitOnClick={submitOnClick}
-					handleClick={handleClick}
-					backlogClicked={backlogClicked}
-					backlogOnChange={backlogOnChange}
-					backlogValue={backlogValue}
-					deletedTask={deletedTask}
-				/>
+		<main className="main">
+			<div className="container">
+				<div className="main-body">
+					<div className="task-container">
+						{/* Backlog */}
+						<BacklogCard
+							blockTitle="Backlog"
+							linkTo="/backlog"
+							tasks={backlogTasks}
+							clicked={backlogClicked}
+							submitOnClick={submitBacklogOnClick}
+							value={backlogValue}
+							onChange={backlogOnChange}
+							handleClick={handleClick('backlog')}
+						/>
+					</div>
+					<div className="task-container">
+						{/* Ready */}
+						<Card
+							blockTitle="Ready"
+							linkTo="/ready"
+							tasks={readyTasks}
+							prevTasks={backlogTasks}
+							clicked={readyClicked}
+							handleClick={handleClick('ready')}
+							handleEmptyClick={handleEmptyClick('ready')}
+							submitOnClick={submitReadyOnClick}
+						/>
+					</div>
+					<div className="task-container">
+						{/* In Progress */}
+						<Card
+							blockTitle="In Progress"
+							linkTo="/in-progress"
+							tasks={inProgressTasks}
+							prevTasks={readyTasks}
+							clicked={inProgressClicked}
+							handleClick={handleClick('inProgress')}
+							handleEmptyClick={handleEmptyClick('inProgress')}
+							submitOnClick={submitInProgressOnClick}
+						/>
+					</div>
+					<div className="task-container">
+						{/* Finished */}
+						<Card
+							blockTitle="Finished"
+							linkTo="/finished"
+							tasks={finishedTasks}
+							prevTasks={inProgressTasks}
+							clicked={finishedClicked}
+							handleClick={handleClick('finished')}
+							handleEmptyClick={handleEmptyClick('finished')}
+							submitOnClick={submitFinishedOnClick}
+						/>
+					</div>
+				</div>
 			</div>
-			<div className="task-container">
-				<Ready
-					handleReadyClick={handleReadyClick}
-					readyClicked={readyClicked}
-					handleReadyEmptyClick={handleReadyEmptyClick}
-					submitReadyOnClick={submitReadyOnClick}
-				/>
-			</div>
-			<div className="task-container">
-				<InProgress
-					handleInProgressEmptyClick={handleInProgressEmptyClick}
-					handleInProgressClick={handleInProgressClick}
-					inProgressClicked={inProgressClicked}
-					submitInProgressOnClick={submitInProgressOnClick}
-				/>
-			</div>
-			<div className="task-container">
-				<Finished
-					handleFinishedEmptyClick={handleFinishedEmptyClick}
-					handleFinishedClick={handleFinishedClick}
-					finishedClicked={finishedClicked}
-					submitFinishedOnClick={submitFinishedOnClick}
-				/>
-			</div>
-		</div>
+		</main>
 	);
 };
-
-export default Main;

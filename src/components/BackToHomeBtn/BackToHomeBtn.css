@@ -1,0 +1,21 @@
+.page-exit span:first-child {
+	position: absolute;
+	background-color: #000;
+	height: 1px;
+	width: 32px;
+	top: 28px;
+	right: 22px;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+
+.page-exit span:nth-child(2) {
+	position: absolute;
+	background-color: #000;
+	height: 1px;
+	width: 32px;
+	top: 28px;
+	right: 22px;
+	transform: rotate(135deg);
+	cursor: pointer;
+}

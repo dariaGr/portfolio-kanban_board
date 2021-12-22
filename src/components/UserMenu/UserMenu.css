@@ -8,7 +8,6 @@
 .toggle-menu {
 	background-color: #fff;
 	width: 134px;
-	height: 60px;
 	border-radius: 5px;
 	position: absolute;
 	top: 50px;
@@ -28,15 +27,18 @@
 }
 
 .toggle-menu-list {
-	margin: 7px;
+	text-align: center;
+	position: relative;
+	z-index: 1;
 }
 
 .toggle-menu-item {
-	margin-bottom: 10px;
+	border-radius: 5px;
+	padding: 7px 0;
 }
 
 .toggle-menu-item:hover {
-	color: #313131;
+	background-color: #dedede;
 }
 
 .arrow-down {

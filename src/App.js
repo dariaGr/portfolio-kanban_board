@@ -1,9 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import './App.css';
-import Header from './components/Header/Header';
-import Main from './components/Main/Main';
-import Footer from './components/Footer/Footer';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createBacklogTask } from './redux/actions';
 import { createBacklogDate } from './redux/actions';
 import { createReadyTask } from './redux/actions';
@@ -15,66 +13,25 @@ import { removeReadyTask } from './redux/actions';
 import { createFinishedTask } from './redux/actions';
 import { createFinishedDate } from './redux/actions';
 import { removeInProgressTask } from './redux/actions';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import BacklogPage from './pages/BacklogPage';
-import ReadyPage from './pages/ReadyPage';
-import InProgressPage from './pages/InProgressPage';
-import FinishedPage from './pages/FinishedPage';
-import NotFound from './pages/NotFound';
+import { Header } from './components/Header';
+import { Main } from './components/Main';
+import { Footer } from './components/Footer';
+import { BacklogPage } from './pages/BacklogPage';
+import { ReadyPage } from './pages/ReadyPage';
+import { InProgressPage } from './pages/InProgressPage';
+import { FinishedPage } from './pages/FinishedPage';
+import { NotFound } from './pages/NotFound';
 
-class App extends React.Component {
+export class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			backlogClicked: false,
 			backlogInputValue: '',
+			backlogClicked: false,
 			readyClicked: false,
-			// deletedTask: false,
 			inProgressClicked: false,
 			finishedClicked: false,
-			status: false,
 		};
-
-		this.handleClick = this.handleClick.bind(this);
-		this.submitOnClick = this.submitOnClick.bind(this);
-		this.handleReadyClick = this.handleReadyClick.bind(this);
-		this.handleReadyEmptyClick = this.handleReadyEmptyClick.bind(this);
-		this.submitReadyOnClick = this.submitReadyOnClick.bind(this);
-		this.handleInProgressClick = this.handleInProgressClick.bind(this);
-		this.handleInProgressEmptyClick = this.handleInProgressEmptyClick.bind(this);
-		this.submitInProgressOnClick = this.submitInProgressOnClick.bind(this);
-		this.handleFinishedClick = this.handleFinishedClick.bind(this);
-		this.handleFinishedEmptyClick = this.handleFinishedEmptyClick.bind(this);
-		this.submitFinishedOnClick = this.submitFinishedOnClick.bind(this);
-	}
-
-	handleClick() {
-		this.setState({ backlogClicked: true });
-	}
-
-	handleReadyClick() {
-		this.setState({ readyClicked: true });
-	}
-
-	handleInProgressClick() {
-		this.setState({ inProgressClicked: true });
-	}
-
-	handleFinishedClick() {
-		this.setState({ finishedClicked: true });
-		console.log('handle finished click');
-	}
-
-	handleReadyEmptyClick() {
-		this.setState({ readyClicked: false });
-	}
-
-	handleInProgressEmptyClick() {
-		this.setState({ inProgressClicked: false });
-	}
-
-	handleFinishedEmptyClick() {
-		this.setState({ finishedClicked: false });
 	}
 
 	backlogOnChange = (event) => {
@@ -83,7 +40,39 @@ class App extends React.Component {
 		});
 	};
 
-	submitOnClick() {
+	handleClick = (cardName) => {
+		return () => {
+			switch (cardName) {
+				case 'backlog':
+					return this.setState({ backlogClicked: true });
+				case 'ready':
+					return this.setState({ readyClicked: true });
+				case 'inProgress':
+					return this.setState({ inProgressClicked: true });
+				case 'finished':
+					return this.setState({ finishedClicked: true });
+				default:
+					return;
+			}
+		};
+	};
+
+	handleEmptyClick = (cardName) => {
+		return () => {
+			switch (cardName) {
+				case 'ready':
+					return this.setState({ readyClicked: false });
+				case 'inProgress':
+					return this.setState({ inProgressClicked: false });
+				case 'finished':
+					return this.setState({ finishedClicked: false });
+				default:
+					return;
+			}
+		};
+	};
+
+	submitBacklogOnClick = () => {
 		const { backlogInputValue } = this.state;
 
 		if (!backlogInputValue.trim()) {
@@ -100,9 +89,9 @@ class App extends React.Component {
 			backlogInputValue: '',
 			backlogClicked: false,
 		});
-	}
+	};
 
-	submitReadyOnClick(value) {
+	submitReadyOnClick = (value) => {
 		const ReadyTasks = this.props.backlogTasks;
 		const newReadyTask = value;
 		const newReadyDate = new Date().toLocaleString();
@@ -110,9 +99,9 @@ class App extends React.Component {
 		this.props.createReadyTask(newReadyTask);
 		this.props.createReadyDate(newReadyDate);
 		this.props.removeBacklogTask(newReadyTaskIndex);
-	}
+	};
 
-	submitInProgressOnClick(value) {
+	submitInProgressOnClick = (value) => {
 		const InProgressTasks = this.props.readyTasks;
 		const newInProgressTask = value;
 		const newInProgressDate = new Date().toLocaleString();
@@ -120,9 +109,9 @@ class App extends React.Component {
 		this.props.createInProgressTask(newInProgressTask);
 		this.props.createInProgressDate(newInProgressDate);
 		this.props.removeReadyTask(newInProgressTaskIndex);
-	}
+	};
 
-	submitFinishedOnClick(value) {
+	submitFinishedOnClick = (value) => {
 		const FinishedTasks = this.props.inProgressTasks;
 		const newFinishedTask = value;
 		const newFinishedDate = new Date().toLocaleString();
@@ -130,17 +119,39 @@ class App extends React.Component {
 		this.props.createFinishedTask(newFinishedTask);
 		this.props.createFinishedDate(newFinishedDate);
 		this.props.removeInProgressTask(newFinishedTaskIndex);
-	}
+	};
+
+	cmp = (tasks, date) => {
+		let newArray = [];
+
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks.indexOf([i]) === date.indexOf([i])) {
+				newArray.push([tasks[i], date[i]]);
+				console.log('newarray:', newArray);
+			}
+		}
+
+		return newArray.map((item) => (
+			<div className="task-page-tasks" key={Math.random()}>
+				<div className="task-page-task">{item[0]}</div>
+				<div className="task-page-date">{item[1]}</div>
+			</div>
+		));
+	};
 
 	render() {
 		const {
-			inProgressClicked,
-			deletedTask,
-			readyClicked,
-			backlogClicked,
-			backlogValue,
-			finishedClicked,
-		} = this.state;
+			backlogTasks,
+			backlogDate,
+			readyTasks,
+			readyDate,
+			inProgressTasks,
+			inProgressDate,
+			finishedTasks,
+			finishedDate,
+		} = this.props;
+		const { inProgressClicked, readyClicked, backlogClicked, backlogValue, finishedClicked } =
+			this.state;
 		return (
 			<Router>
 				<div className="app">
@@ -151,31 +162,53 @@ class App extends React.Component {
 							exact
 							render={(props) => (
 								<Main
-									deletedTask={deletedTask}
-									submitOnClick={this.submitOnClick}
-									submitReadyOnClick={this.submitReadyOnClick}
-									handleClick={this.handleClick}
-									backlogClicked={backlogClicked}
 									backlogValue={backlogValue}
-									backlogOnChange={this.backlogOnChange}
-									handleReadyClick={this.handleReadyClick}
+									backlogClicked={backlogClicked}
 									readyClicked={readyClicked}
-									handleReadyEmptyClick={this.handleReadyEmptyClick}
-									handleInProgressEmptyClick={this.handleInProgressEmptyClick}
-									handleInProgressClick={this.handleInProgressClick}
 									inProgressClicked={inProgressClicked}
-									submitInProgressOnClick={this.submitInProgressOnClick}
-									handleFinishedEmptyClick={this.handleFinishedEmptyClick}
-									handleFinishedClick={this.handleFinishedClick}
 									finishedClicked={finishedClicked}
+									handleClick={this.handleClick}
+									handleEmptyClick={this.handleEmptyClick}
+									submitBacklogOnClick={this.submitBacklogOnClick}
+									submitReadyOnClick={this.submitReadyOnClick}
+									backlogOnChange={this.backlogOnChange}
+									submitInProgressOnClick={this.submitInProgressOnClick}
 									submitFinishedOnClick={this.submitFinishedOnClick}
 								/>
 							)}
 						/>
-						<Route path="/backlog" component={BacklogPage} />
-						<Route path="/ready" component={ReadyPage} />
-						<Route path="/inprogress" component={InProgressPage} />
-						<Route path="/finished" component={FinishedPage} />
+						<Route
+							path="/backlog"
+							render={({ props }) => (
+								<BacklogPage cmp={this.cmp} backlogTasks={backlogTasks} backlogDate={backlogDate} />
+							)}
+						/>
+						<Route
+							path="/ready"
+							render={({ props }) => (
+								<ReadyPage cmp={this.cmp} readyTasks={readyTasks} readyDate={readyDate} />
+							)}
+						/>
+						<Route
+							path="/in-progress"
+							render={({ props }) => (
+								<InProgressPage
+									cmp={this.cmp}
+									inProgressTasks={inProgressTasks}
+									inProgressDate={inProgressDate}
+								/>
+							)}
+						/>
+						<Route
+							path="/finished"
+							render={({ props }) => (
+								<FinishedPage
+									cmp={this.cmp}
+									finishedTasks={finishedTasks}
+									finishedDate={finishedDate}
+								/>
+							)}
+						/>
 						<Route path="*" component={NotFound} />
 					</Switch>
 					<Footer
@@ -193,9 +226,13 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		backlogTasks: state.tasks.backlogTasks,
+		backlogDate: state.tasks.backlogDate,
 		readyTasks: state.tasks.readyTasks,
+		readyDate: state.tasks.readyDate,
 		inProgressTasks: state.tasks.inProgressTasks,
+		inProgressDate: state.tasks.inProgressDate,
 		finishedTasks: state.tasks.finishedTasks,
+		finishedDate: state.tasks.finishedDate,
 	};
 };
 

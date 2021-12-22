@@ -1,14 +1,17 @@
 .footer {
-	height: 55px;
 	background-color: #0067a3;
+	height: 55px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+.footer-body {
 	color: #fff;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 15px;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
+	padding: 20px;
 }
 
 .tasks {
@@ -17,5 +20,26 @@
 }
 
 .active-tasks {
-	margin: 0px 36px 0px 0px;
+   margin: 0px 36px 0px 0px;
+}
+
+@media (max-width: 830px) {
+   .footer {
+      height: 85px;
+   }
+   .footer-body {
+      flex-direction: column;
+   }
+   .tasks {
+      margin: 0px 0px 15px 0px;
+   }
+   .kanban-author {
+      font-size: 14px;
+   }
+}
+
+@media (max-width: 350px) {
+   .tasks {
+      font-size: 16px;
+   }
 }

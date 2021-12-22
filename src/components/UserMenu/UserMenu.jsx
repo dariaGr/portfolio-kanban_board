@@ -1,23 +1,21 @@
-import React from 'react';
+import './UserMenu.css';
+import React, { Component } from 'react';
 import logo from '../../assets/avatar.png';
 import arrow from '../../assets/arrow-down.svg';
-import './UserMenu.css';
 
-class UserMenu extends React.Component {
+export class UserMenu extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			ToggleFlag: false,
 		};
-
-		this.handleToggle = this.handleToggle.bind(this);
 	}
 
-	handleToggle() {
+	handleToggle = () => {
 		this.setState((prevState) => ({
 			ToggleFlag: !prevState.ToggleFlag,
 		}));
-	}
+	};
 
 	render() {
 		const { ToggleFlag } = this.state;
@@ -37,5 +35,3 @@ class UserMenu extends React.Component {
 		);
 	}
 }
-
-export default UserMenu;
